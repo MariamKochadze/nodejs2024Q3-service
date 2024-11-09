@@ -3,5 +3,6 @@ export class Album {
     title: string;
     artistId: string;  
     releaseDate: string;
+ 
   }
   

@@ -1,16 +1,16 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { Album } from './album.entity';  
+import { Album } from './album.entity';  // Adjust if you're using a DB
 
 @Injectable()
 export class AlbumService {
   private albums: Album[] = [];
 
-
+  // Get all albums
   findAll(): Album[] {
     return this.albums;
   }
 
-
+  // Get album by id
   findOne(id: string): Album {
     const album = this.albums.find(album => album.id === id);
     if (!album) {
