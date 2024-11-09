@@ -5,7 +5,7 @@ import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class UserService {
-  private users: User[] = []; // Example: Replace this with a real database implementation
+  private users: User[] = []; 
 
   async findAll(): Promise<User[]> {
     return this.users;
