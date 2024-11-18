@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  postgres:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.postgres
+    image: mariariazanova/home-library-service-postgres:latest
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_PORT=${DB_PORT}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - '${DB_PORT}:${DB_INT_PORT}'
+    networks:
+      - node-postgres-bridge
+    volumes:
+      - db:/var/lib/postgresql/data
+      - logs:/logs
+    command: postgres -c port=${DB_INT_PORT} -c logging_collector=on -c log_destination=stderr -c log_directory=/logs -c log_statement=all
+
+  app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.app
+    image: mariariazanova/home-library-service-app:latest
+    container_name: app
+    environment:
+      - PORT=${PORT}
+    ports:
+      - '${PORT}:${PORT}'
+    depends_on:
+      - postgres
+    volumes:
+      - ./src:/home/node/src
+    networks:
+      - node-postgres-bridge
+    restart: on-failure
+    command: npm run start:dev
+
+networks:
+  node-postgres-bridge:
+    name: node-postgres-bridge
+    driver: bridge
+
+volumes:
+  db:
+  logs:
