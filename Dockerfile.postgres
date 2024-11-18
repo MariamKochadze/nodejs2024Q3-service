@@ -1,0 +1,12 @@
+FROM postgres:16-alpine
+
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache --virtual .build-deps \
+    && apk del .build-deps && \
+    rm -rf /var/cache/apk/*
+
+RUN	mkdir /logs
+RUN	chown postgres:postgres /logs
+
+EXPOSE ${DB_PORT}
