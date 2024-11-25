@@ -1,6 +1,8 @@
-Dockerfile.app
-Dockerfile.postgres
-.dockerignore
-node_modules
-npm-debug.log
-dist
+.env
+.env.example
+.gitignore
+.prettierrc
+README.md
+/dist
+/node_modules
+/.git
